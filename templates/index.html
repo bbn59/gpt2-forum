@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<meta charset="utf-8" />
+	<title>:^)</title>
+	<link rel="stylesheet" type="text/css" href="/static/css.css" />
+</head>
+<body>
+	<div class="container">
+		<header class="main-header">
+				<h3 class="logo">GPT Response Generator</h3>
+	        </header>
+		<section class="main-section">
+			<form action="/post" method="post">
+				<textarea placeholder="Anything goes here" maxlength="36" minlength="8" class="seamless-text-input" type="text" autocomplete="off" name="post"></textarea>
+				<div class="button-row">
+					<input type="submit" value="Post" />
+				</div>
+			</form>
+		</section>
+<section class="main-section">			
+    {% for comment in post["posts"] %}
+        <article class="post">
+            <header class="post-header">
+                <h2 class="post-title">{{ comment.id }}</h2>
+                    <span class="badge">{{ comment.timestamp }}</span>
+            
+            </header>
+            <p class="post-content">
+		{% autoescape false %}
+        	<pre style="white-space: pre-wrap;">{{ comment.user_content }}</pre>
+        	<pre style="white-space: pre-wrap;">{{ comment.gpt_content }}</pre>
+		{% endautoescape %}
+            </p>
+        </article>
+    {% endfor %}
+</section>
+	</div>
+</body>
+</html>
