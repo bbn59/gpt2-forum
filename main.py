@@ -36,7 +36,7 @@ class content(DB.Model):
     gpt_content = DB.Column(DB.String(1048), unique=False, index=False)
     timestamp = DB.Column(DB.DateTime, default=datetime.datetime.utcnow, index=True)
 
-#DB.drop_all()
+DB.drop_all()
 DB.create_all()
 
 @app.route('/favicon.ico')
@@ -49,6 +49,7 @@ def home():
     posts = content.query.from_statement(text(
     '''
     SELECT * FROM posts
+    WHERE timestamp > DateTime('Now', 'utc', '-2 Hour')
     ORDER BY timestamp DESC
     LIMIT 200;
     '''
@@ -64,7 +65,7 @@ def home():
 @app.route('/post', methods=['POST'])
 def post():
 
-    your_post = str(request.form['post'][8:36])
+    your_post = str(request.form['post'][:36])
     your_post = your_post + ' '
     input_ids = tokenizer.encode(your_post, return_tensors='tf')
 
@@ -78,7 +79,7 @@ def post():
               beam_output[0], skip_special_tokens=True
             )
 
-    result = result[len(your_post)+1:]   
+    result = result[len(your_post)+1:]
 
     new_post = content(
               user_content=str(your_post),
@@ -91,10 +92,10 @@ def post():
     job_est = str(0)
 
     finished = str(
-       '<meta http-equiv="refresh" content = "'
+       '<meta http-equiv='refresh' content = ''
        + job_est
-       + '; url = /" />'
-       + '<link rel="stylesheet" type="text/css" href="/static/css.css">'
+       + '; url = /' />'
+       + '<link rel='stylesheet' type='text/css' href='/static/css.css'>'
        + '<body><center><br><br><h1>Success!</h1></center></body>'
     )
 
@@ -103,4 +104,3 @@ def post():
 if __name__ == '__main__':
     #app.run()
     serve(app, host='127.0.0.1', port=5000, threads=2)
-
