@@ -1,5 +1,5 @@
 # gpt2-forum
-Forum with text completed with GPT2
+Forum with text completed from GPT2
 
 # environment
 * ubuntu 22.04
