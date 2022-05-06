@@ -1,0 +1,36 @@
+##not yet ready needs daemon stuff
+
+[Unit]
+Description=GPT2 Forum
+After=network.target nginx.service
+
+[Service]
+User=flask
+Group=flask
+Type=simple
+ExecStart=
+ExecReload=
+ExecStop=
+KillMode=none
+Restart=always
+LockPersonality=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+PrivateTmp=yes
+ProtectClock=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectSystem=full
+ReadWritePaths=/srv/flask
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+SystemCallArchitectures=native
+WorkingDirectory=/srv/flask
+
+[Install]
+WantedBy=multi-user.target
