@@ -88,6 +88,7 @@ def post():
             gpt_output[0], skip_special_tokens=True
         )
 
+        result = str(result)
         result = result[len(your_post)+1:]
 
         new_post = content(
